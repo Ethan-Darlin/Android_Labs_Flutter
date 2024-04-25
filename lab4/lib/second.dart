@@ -1,30 +1,70 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
-class SecondPage extends StatelessWidget {
+
+class SecondPage extends StatefulWidget {
+  final int price;
+  final int initialCount;
+  final int batteryLevel;
+
+  const SecondPage(
+      {super.key, required this.price,
+      required this.initialCount,
+      required this.batteryLevel});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage>
+    with AutomaticKeepAliveClientMixin {
+  int _buyNowCount = 0;
+  int _price = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _price = widget.price;
+    _buyNowCount = widget.initialCount;
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.white),
+          icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {},
         ),
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Text(
+              'Battery: ${widget.batteryLevel}%',
+              style: const TextStyle(
+                fontSize: 15.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
           IconButton(
             icon: Image.asset(
-              'assets/img_2.png', // Убедитесь, что путь к вашей картинке верный
-              width: 50, // Вы можете настроить размер картинки по вашему усмотрению
+              'assets/img_2.png',
+              width: 50,
               height: 50,
             ),
             onPressed: () {},
           ),
         ],
       ),
-
       body: Stack(
         children: [
           Positioned(
@@ -54,8 +94,8 @@ class SecondPage extends StatelessWidget {
                         Row(
                           children: [
                             Transform.translate(
-                              offset: Offset(0, -5), // Смещение вверх на 5 пикселей
-                              child: Text(
+                              offset: const Offset(0, -5),
+                              child: const Text(
                                 '\$',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -65,8 +105,8 @@ class SecondPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '129',
-                              style: TextStyle(
+                              '$_price',
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -74,59 +114,59 @@ class SecondPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         Transform.translate(
-                          offset: Offset(-40, 0), // Смещение текста "39 reviews" вправо и немного вниз
-                          child: Text(
+                          offset: const Offset(-40, 0),
+                          child: const Text(
                             '39 reviews',
-                            style: TextStyle(fontSize: 14,color: Colors.orange), // Стиль для текста "reviews"
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.orange),
                           ),
                         ),
-                        // Заменяем слайдер на своеобразный нерабочий слайдер с блоком-крёжечком
                         Stack(
                           alignment: Alignment.center,
                           children: [
                             Container(
-                              width: 100, // Ширина прямоугольного блока
-                              height: 30, // Высота прямоугольного блока
+                              width: 100,
+                              height: 30,
                               decoration: BoxDecoration(
-                                color: Colors.grey[300], // Цвет прямоугольного блока
-                                borderRadius: BorderRadius.circular(15), // Скругление углов
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 20), // Добавляем отступ слева
+                                  padding: EdgeInsets.only(right: 20),
                                   child: Text(
                                     'CART',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
                             ),
-
                             Positioned(
                               right: 0,
                               child: Container(
-                                width: 30, // Ширина круга
-                                height: 30, // Высота круга
+                                width: 30,
+                                height: 30,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300], // Цвет круга
-                                  shape: BoxShape.circle, // Форма круга
+                                  color: Colors.grey[300],
+                                  shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Container(
-                                    width: 40, // Ширина крёжечки
-                                    height: 40, // Высота крёжечки
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF474173), // Цвет крёжечки
-                                      shape: BoxShape.circle, // Форма крёжечки
+                                    width: 40,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF474173),
+                                      shape: BoxShape.circle,
                                     ),
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         '+',
                                         style: TextStyle(
-                                          fontSize: 20, // Размер шрифта для символа "+"
-                                          color: Colors.white, // Цвет текста
+                                          fontSize: 20,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -139,155 +179,175 @@ class SecondPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(4, (index) => Stack(
-                      children: [
-                        Container(
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/img_15.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              index == 0 ? "10 watt" : index == 1 ? "30 kwh" : index == 2 ? "10 sizes" : "12 colors",
-                              style: TextStyle(fontSize: 16, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
+                    children: List.generate(
+                        4,
+                        (index) => Stack(
+                              children: [
+                                Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    image: const DecorationImage(
+                                      image: AssetImage("assets/img_15.png"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: -2,
+                                  right: 0,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Text(
+                                      index == 0
+                                          ? "10 watt"
+                                          : index == 1
+                                              ? "30 kwh"
+                                              : index == 2
+                                                  ? "10 sizes"
+                                                  : "12 colors",
+                                      style: const TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, // Выравниваем все дочерние элементы по левому краю
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 15.0,top: 15), // Добавляем отступ слева
-                        child: Row( // Используем Row для расположения текста и изображения рядом
+                        padding: const EdgeInsets.only(left: 15.0, top: 15),
+                        child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Rado Lamp',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
-                            Expanded( // Используем Expanded, чтобы изображение прижималось к правому краю
+                            Expanded(
                               child: Align(
-                                alignment: Alignment.centerRight, // Выравниваем изображение по центру справа
+                                alignment: Alignment.centerRight,
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 8), // Добавляем отступ справа
+                                  padding: const EdgeInsets.only(right: 8),
                                   child: Image.asset(
-                                    "assets/img_10.png", // Путь к вашему изображению
-                                    width: 25, // Вы можете настроить размер изображения
+                                    "assets/img_10.png",
+                                    width: 25,
                                     height: 25,
-                                    fit: BoxFit.cover, // Используем BoxFit.cover, чтобы изображение заполнило всё доступное пространство
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10), // Добавляем небольшой отступ между текстом и изображением
+                            const SizedBox(width: 10),
                           ],
                         ),
                       ),
-                      SizedBox(height: 6),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0,top: 15), // Добавляем отступ слева
+                      const SizedBox(height: 6),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15.0, top: 15),
                         child: Text(
                           'This is a description of the Rado Lamp.This is a description of the Rado Lamp.',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
-                      SizedBox(height: 6),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0,top: 15), // Добавляем отступ слева
+                      const SizedBox(height: 6),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15.0, top: 15),
                         child: Text(
                           'Colors',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      // Остальные элементы
                     ],
                   ),
-                  SizedBox(height: 21),
+                  const SizedBox(height: 21),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(4, (index) => Column(
-                      children: [
-                        Builder(builder: (BuildContext context) {
-                          if (index < 3) {
-                            return Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img_17.jpg"),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                  color: Color(0xFF474173), // Устанавливаем фоновый цвет для последнего объекта
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '+',
-                                  style: TextStyle(
-                                    fontSize: 30, // Размер текста
-                                    color: Colors.white, // Цвет текста
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                      ],
-                    )),
+                    children: List.generate(
+                        4,
+                        (index) => Column(
+                              children: [
+                                Builder(builder: (BuildContext context) {
+                                  if (index < 3) {
+                                    return Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: const DecorationImage(
+                                          image:
+                                              AssetImage("assets/img_17.jpg"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: const Color(0xFF474173),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          '+',
+                                          style: TextStyle(
+                                            fontSize: 30,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ],
+                            )),
                   ),
-
-
-
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15),
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MyHomePage(title: '')),
-                            );
+                            Navigator.pop(context, _buyNowCount);
                           },
-                          icon: Padding(
-                            padding: EdgeInsets.only(left: 7.0), // Задайте отступы внутри кнопки
+                          icon: const Padding(
+                            padding: EdgeInsets.only(left: 7.0),
                             child: Icon(Icons.close),
                           ),
-                          label: Text(''), // Если не нужен текст, оставьте его пустым
+                          label: const Text(''),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.white),
-                            foregroundColor: MaterialStateProperty.all(Colors.black),
-                            side: MaterialStateProperty.all(BorderSide(color: Colors.black.withOpacity(0.5), width: 1)),
-                            minimumSize: MaterialStateProperty.all(Size(60, 60)),
-                            padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 10)),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontWeight: FontWeight.w400)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            side: MaterialStateProperty.all(BorderSide(
+                                color: Colors.black.withOpacity(0.5),
+                                width: 1)),
+                            minimumSize:
+                                MaterialStateProperty.all(const Size(60, 60)),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10)),
+                            textStyle: MaterialStateProperty.all(
+                                const TextStyle(fontWeight: FontWeight.w400)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -295,32 +355,46 @@ class SecondPage extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       Padding(
-                        padding: EdgeInsets.only(right: 15),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Buy Now'),
-                        style: ButtonStyle(
-
-                          backgroundColor: MaterialStateProperty.all(Colors.orange), // Фон кнопки
-                          foregroundColor: MaterialStateProperty.all(Colors.white), // Цвет текста
-                          minimumSize: MaterialStateProperty.all(Size(250, 60)), // Минимальный размер кнопки
-                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 10)), // Отступы внутри кнопки
-                          textStyle: MaterialStateProperty.all(TextStyle(fontWeight: FontWeight.w400, fontSize: 22)), // Стиль текста
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                        padding: const EdgeInsets.only(right: 15),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _buyNowCount++;
+                            });
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.orange),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            minimumSize:
+                                MaterialStateProperty.all(const Size(250, 60)),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10)),
+                            textStyle: MaterialStateProperty.all(
+                                const TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 22)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Buy Now'),
+                              const SizedBox(width: 5),
+                              Text('$_buyNowCount'),
+                            ],
                           ),
                         ),
                       ),
-                      ),
                     ],
                   ),
-
-
-
                 ],
               ),
             ),
